@@ -8,13 +8,13 @@ var del = require('del');
 // A gulpfile is just another node program and you can use any package available on npm
 gulp.task('clean', function() {
   // You can use multiple globbing patterns as you would with `gulp.src`
-  return del(['js/**/*.min.js']);
+  // return del(['js/**/*.min.js']);
 });
 
 gulp.task('default', ['watch'])
 
 gulp.task('minify-js', ['clean'], function(){
-  gulp.src('js/*.js') // 要压缩的js 文件
+  gulp.src(['js/*.js','!js/*.min.js']) // 要压缩的js 文件
   .pipe(uglify()) // 使用uglify 进行压缩
   .pipe(rename(function(path){
     path.basename +='.min';
@@ -24,11 +24,11 @@ gulp.task('minify-js', ['clean'], function(){
 });
 
 gulp.task('jshint',['clean'],function(){
-  gulp.src('js/*.js')
+  gulp.src(['js/*.js','!js/*.min.js'])
   .pipe(jshint())
   .pipe(jshint.reporter()); // 输出检测结果
 });
 
 gulp.task('watch', ['clean'],function(){
-  gulp.watch('js/*.js',['minify-js'])
+  gulp.watch(['js/*.js','!js/*.min.js'],['minify-js'])
 })
