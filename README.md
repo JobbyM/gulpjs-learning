@@ -1,2 +1,2 @@
 # gulpjs-learning
-gulpjs learing
+gulpjs learning
